@@ -1,0 +1,3 @@
+usr/lib/python*/*-packages/chromaprint/*
+usr/lib/python*/*-packages/Chromaprint-*.egg-info
+

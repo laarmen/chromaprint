@@ -1,0 +1,39 @@
+Source: chromaprint
+Priority: extra
+Maintainer: Clint Adams <clint@debian.org>
+Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev, python-all-dev (>= 2.3.5-11)
+Standards-Version: 3.9.2
+Section: libs
+Homepage: http://wiki.acoustid.org/wiki/Chromaprint
+Vcs-Git: git://git.debian.org/git/users/clint/chromaprint.git
+Vcs-Browser: http://git.debian.org/?p=users/clint/chromaprint.git;a=summary
+
+Package: libchromaprint-dev
+Section: libdevel
+Architecture: any
+Depends: libchromaprint0 (= ${binary:Version}), ${misc:Depends}
+Description: audio fingerprinting library
+ Chromaprint is a library for calculating audio fingerprints
+ which are used by the Acoustid service.
+
+Package: libchromaprint0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: audio fingerprint library - development files
+ Chromaprint is a library for calculating audio fingerprints,
+ which are used by the Acoustid service.
+ .
+ This package includes development files needed to compile programs
+ using libchromaprint.
+
+Package: python-chromaprint
+Section: python
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, libchromaprint0 (>= ${binary:Version})
+Description: audio fingerprint library - Python bindings
+ Chromaprint is a library for calculating audio fingerprints,
+ which are used by the Acoustid service.
+ .
+ This package includes a Python package that wraps the Chromaprint library.
+
