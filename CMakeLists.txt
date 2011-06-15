@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(chromaprint)
-set(PROJECT_VERSION 0.3.0)
+set(PROJECT_VERSION 0.4.0)
 
 # 1. If the library source code has changed at all since the last update, then increment revision.
 # 2. If any interfaces have been added, removed, or changed since the last update, increment current, and set revision to 0.
 # 3. If any interfaces have been added since the last public release, then increment age.
 # 4. If any interfaces have been removed since the last public release, then set age to 0. 
 set(chromaprint_SOVERSION_CURRENT  1)
-set(chromaprint_SOVERSION_REVISION 1)
+set(chromaprint_SOVERSION_REVISION 2)
 set(chromaprint_SOVERSION_AGE      1)
 
 math(EXPR chromaprint_SOVERSION_MAJOR "${chromaprint_SOVERSION_CURRENT} - ${chromaprint_SOVERSION_AGE}")
@@ -39,14 +39,29 @@ set(BIN_INSTALL_DIR ${EXEC_INSTALL_PREFIX}/bin CACHE PATH "Installation prefix f
 set(LIB_INSTALL_DIR ${EXEC_INSTALL_PREFIX}/lib${LIB_SUFFIX} CACHE PATH  "Installation prefix for object code libraries" FORCE)
 set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include CACHE PATH "Installation prefix for C header files" FORCE)
 
-#if(CMAKE_COMPILER_IS_GNUCXX)
-#	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
-#	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
-#endif(CMAKE_COMPILER_IS_GNUCXX)
+if(APPLE)
+	option(BUILD_FRAMEWORK "Build an OS X framework" OFF)
+	set(FRAMEWORK_INSTALL_DIR "/Library/Frameworks" CACHE STRING "Directory to install frameworks to.")
+endif()
 
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(BUILD_EXAMPLES "Build the examples" OFF)
 option(BUILD_TESTS "Build the test suite" OFF)
 option(BUILD_TOOLS "Build standard tools" OFF)
 option(BUILD_EXTRA_TOOLS "Build extra tools (only useful for development of this library)" OFF)
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+endif()
+if(CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+endif()
+
+if(NOT BUILD_SHARED_LIBS)
+	add_definitions(-DCHROMAPRINT_NODLL)
+endif()
 
 option(WITH_AVFFT "Use FFmpeg for FFT calculations" OFF)
 option(WITH_FFTW3 "Use FFTW3 for FFT calculations" OFF)
@@ -108,8 +123,10 @@ if(WITH_FFTW3)
 	message(STATUS "Using FFTW3 for FFT calculations")
 endif(WITH_FFTW3)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libchromaprint.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libchromaprint.pc)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libchromaprint.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+if(NOT APPLE AND NOT BUILD_FRAMEWORK)
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libchromaprint.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libchromaprint.pc)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libchromaprint.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
@@ -120,8 +137,15 @@ if(BUILD_TOOLS_EXTRA)
 endif(BUILD_TOOLS_EXTRA)
 
 find_package(Boost COMPONENTS system filesystem)
-if(BUILD_TOOLS OR BUILD_TOOLS_EXTRA)
+if(BUILD_TOOLS OR BUILD_TOOLS_EXTRA OR BUILD_EXAMPLES)
 	find_package(FFmpeg REQUIRED)
+endif()
+
+if(BUILD_EXAMPLES)
+	add_subdirectory(examples)
+endif()
+
+if(BUILD_TOOLS OR BUILD_TOOLS_EXTRA)
 	find_package(Taglib REQUIRED)
 	add_subdirectory(tools)
 endif(BUILD_TOOLS OR BUILD_TOOLS_EXTRA)

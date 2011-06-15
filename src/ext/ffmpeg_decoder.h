@@ -53,7 +53,7 @@ public:
 	}
 
 private:
-	static const int BUFFER_SIZE = (AVCODEC_MAX_AUDIO_FRAME_SIZE * 3) / 2;
+	static const int BUFFER_SIZE = AVCODEC_MAX_AUDIO_FRAME_SIZE * 2;
 	uint8_t *m_buffer1;
 	uint8_t *m_buffer2;
 	std::string m_file_name;
@@ -101,9 +101,13 @@ inline bool Decoder::Open()
 
 	//dump_format(m_format_ctx, 0, m_file_name.c_str(), 0);
 
-	for (int i = 0; i < m_format_ctx->nb_streams; i++) {
+	for (size_t i = 0; i < m_format_ctx->nb_streams; i++) {
 		AVCodecContext *avctx = m_format_ctx->streams[i]->codec;
+#if LIBAVCODEC_VERSION_INT <= AV_VERSION_INT(52, 20, 0)
 		if (avctx && avctx->codec_type == CODEC_TYPE_AUDIO) {
+#else
+		if (avctx && avctx->codec_type == AVMEDIA_TYPE_AUDIO) {
+#endif
 			m_stream = m_format_ctx->streams[i];
 			m_codec_ctx = avctx;
 			break;
@@ -165,10 +169,16 @@ inline void Decoder::Decode(Chromaprint::AudioConsumer *consumer, int max_length
 		packet_temp.data = packet.data;
 		packet_temp.size = packet.size;
 		while (packet_temp.size > 0) {
-			int buffer_size = BUFFER_SIZE * sizeof(int16_t);
+			int buffer_size = BUFFER_SIZE;
+#if LIBAVCODEC_VERSION_INT <= AV_VERSION_INT(52, 20, 0)
 			int consumed = avcodec_decode_audio2(
 				m_codec_ctx, (int16_t *)m_buffer1, &buffer_size,
 				packet_temp.data, packet_temp.size);
+#else
+			int consumed = avcodec_decode_audio3(
+				m_codec_ctx, (int16_t *)m_buffer1, &buffer_size,
+				&packet_temp);
+#endif
 
 			if (consumed < 0) {
 				break;
@@ -195,7 +205,7 @@ inline void Decoder::Decode(Chromaprint::AudioConsumer *consumer, int max_length
 				length = buffer_size / istride[0];
 				audio_buffer = (int16_t *)m_buffer2;
 			}*/
-
+	
 			if (max_length) {
 				length = std::min(remaining, length);
 			}
