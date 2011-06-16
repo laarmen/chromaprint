@@ -1,3 +1,9 @@
+chromaprint (0.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Clint Adams <clint@debian.org>  Wed, 15 Jun 2011 20:03:33 -0400
+
 chromaprint (0.3-1) unstable; urgency=low
 
   * Initial upload to Debian, based on upstream packaging.
