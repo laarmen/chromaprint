@@ -2,6 +2,9 @@
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <chromaprint.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
@@ -10,7 +13,7 @@
 
 int decode_audio_file(ChromaprintContext *chromaprint_ctx, int16_t *buffer, const char *file_name, int max_length, int *duration)
 {
-	int i, ok = 0, remaining, length, consumed, buffer_size;
+	int i, ok = 0, remaining, length, consumed, buffer_size, codec_ctx_opened = 0;
 	AVFormatContext *format_ctx = NULL;
 	AVCodecContext *codec_ctx = NULL;
 	AVCodec *codec = NULL;
@@ -53,6 +56,7 @@ int decode_audio_file(ChromaprintContext *chromaprint_ctx, int16_t *buffer, cons
 		fprintf(stderr, "ERROR: couldn't open the codec\n");
 		goto done;
 	}
+	codec_ctx_opened = 1;
 
 	if (codec_ctx->sample_fmt != SAMPLE_FMT_S16) {
 		fprintf(stderr, "ERROR: unsupported sample format\n");
@@ -136,7 +140,7 @@ finish:
 	ok = 1;
 
 done:
-	if (codec_ctx) {
+	if (codec_ctx_opened) {
 		avcodec_close(codec_ctx);
 	}
 	if (format_ctx) {
@@ -145,7 +149,7 @@ done:
 	return ok;
 }
 
-int main(int argc, char **argv)
+int fpcalc_main(int argc, char **argv)
 {
 	int i, j, max_length = 60, num_file_names = 0, raw = 0, raw_fingerprint_size, duration;
 	int16_t *buffer;
@@ -217,6 +221,39 @@ int main(int argc, char **argv)
 	av_free(buffer);
 	free(file_names);
 
-	return 1;
+	return 0;
 }
+
+#ifdef _WIN32
+int main(int win32_argc, char **win32_argv)
+{
+	int i, argc = 0, buffsize = 0, offset = 0;
+	char **utf8_argv, *utf8_argv_ptr;
+	wchar_t **argv;
+
+	argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+
+	buffsize = 0;
+	for (i = 0; i < argc; i++) {
+		buffsize += WideCharToMultiByte(CP_UTF8, 0, argv[i], -1, NULL, 0, NULL, NULL);
+	}
+
+	utf8_argv = av_mallocz(sizeof(char *) * (argc + 1) + buffsize);
+	utf8_argv_ptr = (char *)utf8_argv + sizeof(char *) * (argc + 1);
+
+	for (i = 0; i < argc; i++) {
+		utf8_argv[i] = &utf8_argv_ptr[offset];
+		offset += WideCharToMultiByte(CP_UTF8, 0, argv[i], -1, &utf8_argv_ptr[offset], buffsize - offset, NULL, NULL);
+	}
+
+	LocalFree(argv);
+
+	return fpcalc_main(argc, utf8_argv);
+}
+#else
+int main(int argc, char **argv)
+{
+	return fpcalc_main(argc, argv);
+}
+#endif
 
