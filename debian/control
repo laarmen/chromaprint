@@ -1,7 +1,7 @@
 Source: chromaprint
 Priority: extra
 Maintainer: Clint Adams <clint@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev, python-all-dev (>= 2.3.5-11)
+Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev, python-support, python-all-dev (>= 2.3.5-11)
 Standards-Version: 3.9.2
 Section: libs
 Homepage: http://wiki.acoustid.org/wiki/Chromaprint
