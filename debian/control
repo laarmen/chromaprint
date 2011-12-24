@@ -1,6 +1,6 @@
 Source: chromaprint
 Priority: extra
-Maintainer: Debian QA Group <packages@qa.debian.org>
+Maintainer: Simon Chopin <chopin.simon@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev, python-support, python-all-dev (>= 2.3.5-11)
 Standards-Version: 3.9.2
 Section: libs
