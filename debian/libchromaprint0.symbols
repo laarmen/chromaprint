@@ -1,0 +1,20 @@
+libchromaprint.so.0 libchromaprint0 #MINVER#
+ (c++|optional)"std::vector<char, std::allocator<char> >::_M_insert_aux(__gnu_cxx::__normal_iterator<char*, std::vector<char, std::allocator<char> > >, char const&)@Base" 0.6
+ (c++|optional)"std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&)@Base" 0.6
+ (c++|optional)"std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&)@Base" 0.6
+ (c++|optional)"void std::__adjust_heap<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, long, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, long, long, double)@Base" 0.6
+ (c++|optional)"void std::__heap_select<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)@Base" 0.6
+ (c++|optional)"void std::__insertion_sort<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)@Base" 0.6
+ (c++|optional)"void std::__introsort_loop<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, long>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, long)@Base" 0.6
+ (c++|optional)"void std::__move_median_first<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)@Base" 0.6
+ chromaprint_dealloc@Base 0.6
+ chromaprint_decode_fingerprint@Base 0.6
+ chromaprint_encode_fingerprint@Base 0.6
+ chromaprint_feed@Base 0.6
+ chromaprint_finish@Base 0.6
+ chromaprint_free@Base 0.6
+ chromaprint_get_fingerprint@Base 0.6
+ chromaprint_get_raw_fingerprint@Base 0.6
+ chromaprint_get_version@Base 0.6
+ chromaprint_new@Base 0.6
+ chromaprint_start@Base 0.6
