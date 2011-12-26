@@ -1,5 +1,5 @@
 Source: chromaprint
-Priority: extra
+Priority: optional
 Maintainer: Simon Chopin <chopin.simon@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev
 Standards-Version: 3.9.2
