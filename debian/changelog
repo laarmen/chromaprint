@@ -1,8 +1,9 @@
 chromaprint (0.6-1) unstable; urgency=low
 
   * New upstream release
+    - The python bindings have been moved to the pyacoustid package,
+      available in Debian as python-acoustid.
   * Set Maintainer to Simon Chopin (Closes: #651823)
-  * Drop the python bindings 
   * Add fpcalc binary to libchromaprint0 (Closes: #649292)
     - It requires a patch to use the libavcodec public interfaces instead of
       the private ones that are defined in the bundled headers
