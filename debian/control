@@ -1,7 +1,7 @@
 Source: chromaprint
 Priority: optional
 Maintainer: Simon Chopin <chopin.simon@gmail.com>
-Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev
+Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, libfftw3-dev, libgtest-dev, python-docutils
 Standards-Version: 3.9.2
 Section: libs
 Homepage: http://wiki.acoustid.org/wiki/Chromaprint

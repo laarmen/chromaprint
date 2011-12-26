@@ -22,3 +22,10 @@ CONFIGURE_FLAGS = -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=True -DHAVE_AV_AUD
 override_dh_auto_configure:
 	@dh_auto_configure -- $(CONFIGURE_FLAGS)
 
+override_dh_installman:
+	rst2man debian/fpcalc.rst > debian/fpcalc.1
+	dh_installman
+
+override_dh_clean:
+	dh_clean
+	rm -f debian/fpcalc.1
