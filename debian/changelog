@@ -8,8 +8,9 @@ chromaprint (0.6-1) unstable; urgency=low
       the private ones that are defined in the bundled headers
   * Set Priority: optional because pyacoustid (rdep) is optional
   * Add symbols file.
+  * Fix package -dev decription mixup
 
- -- Simon Chopin <chopin.simon@gmail.com>  Mon, 26 Dec 2011 12:37:33 +0100
+ -- Simon Chopin <chopin.simon@gmail.com>  Mon, 26 Dec 2011 14:35:58 +0100
 
 chromaprint (0.5-1) unstable; urgency=low
 
