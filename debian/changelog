@@ -3,8 +3,11 @@ chromaprint (0.6-1) unstable; urgency=low
   * New upstream release
   * Set Maintainer to Simon Chopin (Closes: #651823)
   * Drop the python bindings 
+  * Add fpcalc binary to libchromaprint0 (Closes: #649292)
+    - It requires a patch to use the libavcodec public interfaces instead of
+      the private ones that are defined in the bundled headers
 
- -- Simon Chopin <chopin.simon@gmail.com>  Sat, 24 Dec 2011 13:22:25 +0100
+ -- Simon Chopin <chopin.simon@gmail.com>  Mon, 26 Dec 2011 00:57:41 +0100
 
 chromaprint (0.5-1) unstable; urgency=low
 

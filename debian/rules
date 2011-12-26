@@ -9,7 +9,7 @@
 # Uncomment this to turn on verbose mode.
 # export DH_VERBOSE=1
 
-CONFIGURE_FLAGS = -DCMAKE_BUILD_TYPE=Release
+CONFIGURE_FLAGS = -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=True -DHAVE_AV_AUDIO_CONVERT=True
 
 # FIXME the tests currently can't run with a out-of-source build
 #ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
