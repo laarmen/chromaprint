@@ -1,0 +1,2 @@
+# Use experimental debhelper multiarch support in compat 9
+chromaprint source: package-needs-versioned-debhelper-build-depends
