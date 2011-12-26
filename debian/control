@@ -31,6 +31,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Suggests: libchromaprint-bin, python-acoustid
 Description: audio fingerprint library
  Chromaprint is a library for calculating audio fingerprints
  which are used by the Acoustid service. Its main purpose is to provide an
