@@ -5,8 +5,8 @@ Build-Depends: debhelper (>= 7.0.50~), cmake, libavcodec-dev, libavformat-dev, l
 Standards-Version: 3.9.2
 Section: libs
 Homepage: http://wiki.acoustid.org/wiki/Chromaprint
-Vcs-Git: git://git.debian.org/git/users/clint/chromaprint.git
-Vcs-Browser: http://git.debian.org/?p=users/clint/chromaprint.git;a=summary
+Vcs-Git: git://git.debian.org/git/collab-maint/chromaprint.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/chromaprint.git;a=summary
 
 Package: libchromaprint-dev
 Section: libdevel
