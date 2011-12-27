@@ -40,8 +40,7 @@ Description: audio fingerprint library
 Package: libchromaprint-bin
 Section: sound
 Architecture: any
-Depends: libchromaprint0 (= ${binary:Version}),
-         ${misc:Depends},
+Depends: ${misc:Depends},
          ${shlibs:Depends}
 Description: audio fingerprinting library - tools
  Chromaprint is a library for calculating audio fingerprints
