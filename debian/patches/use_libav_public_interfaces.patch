@@ -26,7 +26,7 @@ Last-Update: 2011-12-26
  #endif
  	int16_t *buffer;
  
-@@ -73,8 +69,10 @@
+@@ -73,8 +69,9 @@
  
  	if (codec_ctx->sample_fmt != SAMPLE_FMT_S16) {
  #ifdef HAVE_AV_AUDIO_CONVERT
@@ -38,7 +38,7 @@ Last-Update: 2011-12-26
  		if (!convert_ctx) {
  			fprintf(stderr, "ERROR: couldn't create sample format converter\n");
  			goto done;
-@@ -131,16 +129,14 @@
+@@ -131,16 +128,18 @@
  
  #ifdef HAVE_AV_AUDIO_CONVERT
  			if (convert_ctx) {
@@ -48,7 +48,11 @@ Last-Update: 2011-12-26
 -				int ostride[6] = { 2 };
 -				int len = buffer_size / istride[0];
 -				if (av_audio_convert(convert_ctx, obuf, ostride, ibuf, istride, len) < 0) {
++#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(53, 3, 0)
 +				int isize = buffer_size / av_get_bytes_per_sample(codec_ctx->sample_fmt);
++#else
++				int isize = buffer_size / (av_get_bits_per_sample_format(codec_ctx->sample_fmt) / 8);
++#endif
 +				int osize = buffer_size / 2 ;
 +				int len = MIN(isize, osize);
 +				if (audio_resample(convert_ctx, buffer2, buffer1, len) < 0) {
@@ -60,7 +64,7 @@ Last-Update: 2011-12-26
  			}
  			else {
  				buffer = buffer1;
-@@ -185,7 +181,7 @@
+@@ -185,7 +184,7 @@
  	}
  #ifdef HAVE_AV_AUDIO_CONVERT
  	if (convert_ctx) {
